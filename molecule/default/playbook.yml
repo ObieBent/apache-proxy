@@ -1,0 +1,16 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: apache-proxy
+      apache2_proxies:
+        www.lab.lan:
+          ssl:
+            enabled: true
+            redirect_to_https: true
+          server_aliases:
+            - www.lab.lan
+            - lab.lan
+          http_backends_port: 80
+          http_backends:
+            - 195.154.89.84
