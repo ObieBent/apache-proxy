@@ -21,13 +21,13 @@
     state: present
   when: apache2_modsecurity_default_mode != "Off"
 
-- include: reverse-proxy.yml
+- include_tasks: reverse-proxy.yml
   tags: config
 
 - name: main | Create apache proxy configs
   tags:
     - config
     - config_create_proxy
-  include: proxy.yml proxy_params="{{ item.value }}" proxy_name="{{ item.value.proxy_name|default(item.key) }}"
+  include_tasks: proxy.yml proxy_params="{{ item.value }}" proxy_name="{{ item.value.proxy_name|default(item.key) }}"
   with_dict: "{{ apache2_proxies }}"
   when: apache2_proxies|length > 0
